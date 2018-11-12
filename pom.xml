@@ -7,6 +7,60 @@
 	<groupId>edu.guet.gnuforce</groupId>
 	<artifactId>BabaIsYou</artifactId>
 	<version>1.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
+	<dependencies>
+		<dependency>
+			<groupId>de.gurkenlabs</groupId>
+			<artifactId>litiengine</artifactId>
+			<version>0.4.13</version>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20180813</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>BabaIsYou</finalName>
+		<directory>target</directory>
+		<defaultGoal>install</defaultGoal>
+		<resources>
+			<resource>
+				<targetPath>resources/</targetPath>
+				<directory>main/resources</directory>
+				<includes>
+					<include>*</include>
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<archive>
+								<manifest>
+									<mainClass>
+										org.baeldung.executable.ExecutableMavenJar
+									</mainClass>
+								</manifest>
+							</archive>
+							<descriptorRefs>
+								<descriptorRef>jar-with-dependencies</descriptorRef>
+							</descriptorRefs>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>
