@@ -26,11 +26,11 @@
 		<finalName>AnythingIsPossible</finalName>
 		<directory>target</directory>
 		<defaultGoal>install</defaultGoal>
-		<sourceDirectory>main/src</sourceDirectory>
+		<sourceDirectory>src/main/java</sourceDirectory>
 		<resources>
 			<resource>
-				<targetPath>resources/</targetPath>
-				<directory>main/resources</directory>
+				<targetPath>src/main/resources</targetPath>
+				<directory>resources</directory>
 				<includes>
 					<include>*</include>
 				</includes>
