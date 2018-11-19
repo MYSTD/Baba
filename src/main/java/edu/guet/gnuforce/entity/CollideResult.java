@@ -7,7 +7,7 @@ public enum CollideResult {
 	ERASE(3),
 	GOAL(4);
 
-	private CollideResult(int x) {
+	CollideResult(int x) {
 		value = x;
 	}
 

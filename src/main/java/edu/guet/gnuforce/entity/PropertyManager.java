@@ -1,6 +1,9 @@
 package edu.guet.gnuforce.entity;
 
-import java.io.File;
+import jdk.nashorn.internal.parser.JSONParser;
+import org.json.JSONObject;
+
+import java.io.*;
 import java.util.HashMap;
 
 public class PropertyManager {
@@ -22,7 +25,20 @@ public class PropertyManager {
 	 */
 	public void loadPropertiesFromDirectory(File file) {
 		File[] files = file.listFiles();
-
+		for(File f : files) {
+			if (f.getName().endsWith(".json")) {
+				try {
+					InputStream inputStream = new FileInputStream(f);
+					InputStreamReader reader = new InputStreamReader(inputStream);
+					JSONObject obj = new JSONObject(reader);
+					String name = obj.getString("name");
+					Property property = Property.fromFile(f);
+					properties.put(name, property);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	private static PropertyManager instance = null;
