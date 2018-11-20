@@ -29,11 +29,11 @@
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<resources>
 			<resource>
-				<targetPath>src/main/resources</targetPath>
-				<directory>resources</directory>
+				<directory>src/main/resources</directory>
 				<includes>
 					<include>*</include>
 				</includes>
+				<targetPath>../resources/</targetPath>
 			</resource>
 		</resources>
 		<plugins>

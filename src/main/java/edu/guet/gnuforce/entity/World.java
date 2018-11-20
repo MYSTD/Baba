@@ -7,4 +7,8 @@ public class World {
 		// TODO
 		return null;
 	}
+
+	public void calculateStep(MoveDirection direction) {
+
+	}
 }
