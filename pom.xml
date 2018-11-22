@@ -20,6 +20,11 @@
 			<artifactId>json</artifactId>
 			<version>20180813</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jetbrains</groupId>
+			<artifactId>annotations</artifactId>
+			<version>13.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -31,9 +36,48 @@
 			<resource>
 				<directory>src/main/resources</directory>
 				<includes>
-					<include>*</include>
+					<include>game.xml</include>
 				</includes>
+				<excludes>
+					<exclude>
+						config.properties
+					</exclude>
+				</excludes>
 				<targetPath>../resources/</targetPath>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>
+						config.properties
+					</include>
+				</includes>
+				<targetPath>..</targetPath>
+			</resource>
+			<resource>
+				<directory>src/main/resources/font</directory>
+				<includes>
+					<include>*.ttf</include>
+				</includes>
+				<excludes>
+					<exclude>game.xml</exclude>
+					<exclude>config.properties</exclude>
+				</excludes>
+				<targetPath>font</targetPath>
+			</resource>
+			<resource>
+				<directory>src/main/resources/sound</directory>
+				<includes>
+					<include>*.ogg</include>
+				</includes>
+				<targetPath>sound</targetPath>
+			</resource>
+			<resource>
+				<directory>src/main/resources/sprite</directory>
+				<includes>
+					<include>*.png</include>
+				</includes>
+				<targetPath>sprite</targetPath>
 			</resource>
 		</resources>
 		<plugins>

@@ -17,8 +17,8 @@ public class Property {
 		 * {
 		 *  "name": "String",
 		 *  "icon": "String:IconName",
-		 *  "type": "(property|action)"
-		 *  "value": "(String:CollideResult|String:MoveDirection)"
+		 *  "type": "(property|action|you)"
+		 *  "value": "(String:CollideResult|String:MoveDirection|"")"
 		 * }
 		 */
 		// TODO
@@ -49,6 +49,8 @@ public class Property {
 			case ACTION:
 				this.direction = MoveDirection.valueOf(object.getString("value").toUpperCase());
 				break;
+			case YOU:
+				break;
 		}
 	}
 
@@ -62,6 +64,18 @@ public class Property {
 
 	public PropertyType getType() {
 		return type;
+	}
+
+	public Object getValue() {
+		switch (this.type) {
+			case PROPERTY:
+				return result;
+			case ACTION:
+				return direction;
+			case YOU:
+				return null;
+		}
+		return null;
 	}
 
 	public String getName() {

@@ -1,6 +1,9 @@
 package edu.guet.gnuforce.entity;
 
+import edu.guet.gnuforce.internal.LogLevel;
+import edu.guet.gnuforce.internal.Logger;
 import jdk.nashorn.internal.parser.JSONParser;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.io.*;
@@ -23,21 +26,26 @@ public class PropertyManager {
 	 *
 	 * @param file 目录
 	 */
-	public void loadPropertiesFromDirectory(File file) {
+	public void loadPropertiesFromDirectory(@NotNull File file) {
 		File[] files = file.listFiles();
-		for(File f : files) {
-			if (f.getName().endsWith(".json")) {
-				try {
-					InputStream inputStream = new FileInputStream(f);
-					InputStreamReader reader = new InputStreamReader(inputStream);
-					JSONObject obj = new JSONObject(reader);
-					String name = obj.getString("name");
-					Property property = Property.fromFile(f);
-					properties.put(name, property);
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
+		if (files != null) {
+			for (File f : files) {
+				if (f.getName().endsWith(".json")) {
+					try {
+						InputStream inputStream = new FileInputStream(f);
+						InputStreamReader reader = new InputStreamReader(inputStream);
+						JSONObject obj = new JSONObject(reader);
+						String name = obj.getString("name");
+						Property property = Property.fromFile(f);
+						properties.put(name, property);
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+					}
 				}
 			}
+			Logger.log("Loaded " + String.valueOf(properties.size()) + "properties");
+		} else {
+			Logger.log(LogLevel.WARNING, "Path `" + file.getAbsolutePath() + "` is not a directory or not readable");
 		}
 	}
 

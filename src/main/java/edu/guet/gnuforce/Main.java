@@ -1,13 +1,11 @@
 package edu.guet.gnuforce;
 
-import edu.guet.gnuforce.file.ResourceManager;
+import edu.guet.gnuforce.game.GameInstance;
 
 public class Main {
 	public static void main(String[] args) {
-		ResourceManager res = ResourceManager.getInstance();
-		res.loadResources();
-
-		System.out.println("Hello, World!");
+		System.out.println("AnythingIsYou - :D");
+		GameInstance instance = new GameInstance();
 	}
 }
 

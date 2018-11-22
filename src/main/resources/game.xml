@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <gameinfo>
 	<name>Anything is Possible</name>
+	<subTitle>Just a game</subTitle>
+	<website>http://dsstudio.tech/works/games.html</website>
+	<company>D.S. Studio</company>
 	<version>0.1-alpha</version>
+	<developer>dousha99</developer>
 </gameinfo>
