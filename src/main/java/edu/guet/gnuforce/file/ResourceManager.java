@@ -1,10 +1,6 @@
 package edu.guet.gnuforce.file;
 
-import com.sun.javafx.tk.FontLoader;
 import de.gurkenlabs.litiengine.Game;
-import de.gurkenlabs.litiengine.Resources;
-import de.gurkenlabs.litiengine.configuration.GameConfiguration;
-import de.gurkenlabs.litiengine.configuration.GraphicConfiguration;
 import de.gurkenlabs.litiengine.sound.Sound;
 import edu.guet.gnuforce.entity.PropertyManager;
 import edu.guet.gnuforce.internal.LogLevel;
@@ -14,9 +10,14 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.*;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.jar.JarFile;
-import java.util.zip.ZipEntry;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 public class ResourceManager {
 
@@ -38,8 +39,32 @@ public class ResourceManager {
 
 	public void loadResources() {
 		Game.setInfo("resources/game.xml");
-
-		//PropertyManager.getInstance().loadPropertiesFromDirectory(new File(base, "properties"));
+		Logger.log("Now loading properties...");
+		PropertyManager pm = PropertyManager.getInstance();
+		try {
+			URI uri = Objects.requireNonNull(ResourceManager.class.getClassLoader().getResource("/property")).toURI();
+			Path path;
+			if (uri.getScheme().equals("jar")) {
+				FileSystem fs = FileSystems.newFileSystem(uri, Collections.emptyMap());
+				path = fs.getPath("/property");
+			} else {
+				path = Paths.get(uri);
+			}
+			Stream<Path> walk = Files.walk(path, 1);
+			for (Iterator<Path> it = walk.iterator(); it.hasNext();) {
+				Path p = it.next();
+				pm.addPropertyFromFile(p.toFile());
+			}
+		} catch (URISyntaxException | IOException e) {
+			e.printStackTrace();
+		}
+		Logger.log("Loading fonts...");
+		InputStream fontInputStream = ResourceManager.class.getResourceAsStream("/font/joystix.ttf");
+		try {
+			fonts.put("Joystix", Font.createFont(Font.TRUETYPE_FONT, fontInputStream));
+		} catch (FontFormatException | IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public Sound getSound(String name) {

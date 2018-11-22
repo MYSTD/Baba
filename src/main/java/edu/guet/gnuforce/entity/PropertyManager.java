@@ -31,21 +31,25 @@ public class PropertyManager {
 		if (files != null) {
 			for (File f : files) {
 				if (f.getName().endsWith(".json")) {
-					try {
-						InputStream inputStream = new FileInputStream(f);
-						InputStreamReader reader = new InputStreamReader(inputStream);
-						JSONObject obj = new JSONObject(reader);
-						String name = obj.getString("name");
-						Property property = Property.fromFile(f);
-						properties.put(name, property);
-					} catch (FileNotFoundException e) {
-						e.printStackTrace();
-					}
+					addPropertyFromFile(f);
 				}
 			}
 			Logger.log("Loaded " + String.valueOf(properties.size()) + "properties");
 		} else {
 			Logger.log(LogLevel.WARNING, "Path `" + file.getAbsolutePath() + "` is not a directory or not readable");
+		}
+	}
+
+	public void addPropertyFromFile(@NotNull File f) {
+		try {
+			InputStream inputStream = new FileInputStream(f);
+			InputStreamReader reader = new InputStreamReader(inputStream);
+			JSONObject obj = new JSONObject(reader);
+			String name = obj.getString("name");
+			Property property = Property.fromFile(f);
+			properties.put(name, property);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
 	}
 
