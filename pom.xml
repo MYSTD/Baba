@@ -79,6 +79,13 @@
 				</includes>
 				<targetPath>sprite</targetPath>
 			</resource>
+			<resource>
+				<directory>src/main/resources/property</directory>
+				<includes>
+					<include>*.json</include>
+				</includes>
+				<targetPath>property</targetPath>
+			</resource>
 		</resources>
 		<plugins>
 			<plugin>

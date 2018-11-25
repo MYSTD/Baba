@@ -24,16 +24,11 @@ public class Property {
 		// TODO
 		try {
 			InputStream inputStream = new FileInputStream(file);
-			InputStreamReader reader = new InputStreamReader(inputStream);
-			JSONObject obj = new JSONObject(reader);
-			Property property;
-			try {
-				property = new Property(obj);
-			} catch (NullPointerException | EnumConstantNotPresentException ex) {
-				return null;
-			}
-			return property;
+			return Property.fromFile(inputStream);
 		} catch (FileNotFoundException ex) {
+			return null;
+		} catch (IOException e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -52,6 +47,34 @@ public class Property {
 			case YOU:
 				break;
 		}
+	}
+
+	public static Property fromFile(InputStream stream) throws IOException {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+		String line;
+		StringBuilder sb = new StringBuilder();
+		while ((line = reader.readLine()) != null) {
+			sb.append(line);
+		}
+		JSONObject obj = new JSONObject(sb.toString());
+		Property property;
+		try {
+			property = new Property(obj);
+		} catch (NullPointerException | EnumConstantNotPresentException ex) {
+			return null;
+		}
+		return property;
+	}
+
+	public static Property deserialize(String json) {
+		JSONObject obj = new JSONObject(json);
+		Property property;
+		try {
+			property = new Property(obj);
+		} catch (NullPointerException | EnumConstantNotPresentException ex) {
+			return null;
+		}
+		return property;
 	}
 
 	public CollideResult resolve() {

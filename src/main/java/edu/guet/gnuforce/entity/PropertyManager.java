@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.HashMap;
 
 public class PropertyManager {
@@ -42,15 +43,23 @@ public class PropertyManager {
 
 	public void addPropertyFromFile(@NotNull File f) {
 		try {
-			InputStream inputStream = new FileInputStream(f);
-			InputStreamReader reader = new InputStreamReader(inputStream);
-			JSONObject obj = new JSONObject(reader);
-			String name = obj.getString("name");
-			Property property = Property.fromFile(f);
-			properties.put(name, property);
-		} catch (FileNotFoundException e) {
+			addPropertyFromFile(new FileInputStream(f));
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void addPropertyFromFile(@NotNull InputStream stream) throws IOException {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+		String line;
+		StringBuilder sb = new StringBuilder();
+		while ((line = reader.readLine()) != null) {
+			sb.append(line);
+		}
+		JSONObject obj = new JSONObject(sb.toString());
+		String name = obj.getString("name");
+		Property property = Property.deserialize(sb.toString());
+		properties.put(name, property);
 	}
 
 	private static PropertyManager instance = null;
